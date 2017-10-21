@@ -11,17 +11,27 @@ class App extends Component {
         super(props);
 
         this.state = {
-            news: JSON
-        }
+            news: JSON,
+            filtered: JSON
+        };
     }
+
+    filterNews(keywords) {
+        let filtered = this.state.news.filter((item) => {
+            return item.title.indexOf(keywords) > -1;
+        });
+        console.log(filtered);
+        this.setState({filtered});
+    }
+
     render() {
-        return (
+        return ( 
             <div>
-                <Header />
-                <NewsList news={this.state.news}/>
+            <Header newsSearch={keywords=>this.filterNews(keywords)}/>
+            <NewsList news={ this.state.filtered}/> 
             </div>
         );
     }
 }
 
-ReactDOM.render(<App />, document.querySelector('#root'));
+ReactDOM.render(<App /> , document.querySelector('#root'));
